@@ -4,7 +4,7 @@ pipeline {
 
     parameters {
         string(name: 'NEW_VERSION', defaultValue: '1.0.0', description: 'Version number for the build')
-        boolean(name: 'RUN_TESTS', defaultValue: true, description: 'Whether to run tests')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Whether to run tests')
         choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'prod'], description: 'Deployment environment')
 
     }
