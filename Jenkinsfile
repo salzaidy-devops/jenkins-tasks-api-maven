@@ -1,3 +1,6 @@
+def gv
+
+
 pipeline {
 
     agent any
@@ -10,10 +13,19 @@ pipeline {
     }
 
     stages {
-
-        stage("build") {
+        stage('initialize') {
             steps {
-                echo 'building the application...'
+                script {
+                    gv = load 'Jenkins/pipeline/script.groovy'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    gv.buildApp()
+                }
             }
         }
 
@@ -22,16 +34,20 @@ pipeline {
                 // Conditional execution based on the RUN_TESTS parameter
                 expression {  params.RUN_TESTS }
             }
+
             steps {
-                echo 'testing the application...'
+                script {
+                    gv.testApp()
+                }
             }
         }
 
 
-        stage("deploy") {
+        stage('Deploy') {
             steps {
-                echo 'deploying the application...'
-                echo "deploying version ${params.ENVIRONMENT} ENVIRONMENT"
+                script {
+                    gv.deployApp()
+                }
             }
         }
     }
